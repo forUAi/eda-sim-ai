@@ -1,0 +1,20 @@
+# Configuration for PPA surrogate model training
+
+extends: placement_config.yaml
+
+model:
+  architecture: "SetTransformer"
+  num_heads: 8
+  num_seeds: 32
+  
+training:
+  phase: "surrogate"
+  metrics_loss_weights:
+    hpwl: 1.0
+    timing: 2.0
+    power: 1.0
+    congestion: 1.5
+    
+data:
+  include_suboptimal: true  # Learn from both good and bad placements
+  placement_noise_augmentation: 0.05

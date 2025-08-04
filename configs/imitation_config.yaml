@@ -1,0 +1,23 @@
+# Specific configuration for imitation learning phase
+
+extends: placement_config.yaml
+
+training:
+  phase: "imitation"
+  max_epochs: 200
+  early_stopping_patience: 20
+  
+data:
+  expert_placement_quality: "high"  # high, medium, mixed
+  filter_poor_placements: true
+  quality_threshold: 0.8
+  
+model:
+  pretrained_weights: null
+  freeze_encoder: false
+  
+augmentation:
+  flip_prob: 0.5
+  rotate_prob: 0.5
+  noise_std: 0.01
+  mixup_alpha: 0.2

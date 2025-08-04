@@ -1,0 +1,54 @@
+# Core dependencies for EDA-SIM-AI
+
+# Deep Learning
+torch>=2.0.0
+torch-geometric>=2.3.0
+torch-scatter>=2.1.0
+torch-sparse>=0.6.17
+
+# Reinforcement Learning
+stable-baselines3>=2.0.0
+gymnasium>=0.28.0
+
+# Scientific Computing
+numpy>=1.24.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+
+# Data Processing
+pandas>=2.0.0
+networkx>=3.0
+h5py>=3.8.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Configuration and Logging
+pyyaml>=6.0
+wandb>=0.15.0
+tqdm>=4.65.0
+colorlog>=6.7.0
+
+# Development Tools
+pytest>=7.3.0
+pytest-cov>=4.0.0
+black>=23.3.0
+flake8>=6.0.0
+mypy>=1.2.0
+pre-commit>=3.3.0
+
+# Benchmarking
+psutil>=5.9.0
+py-cpuinfo>=9.0.0
+gputil>=1.4.0
+
+# Optional: EDA Tools Interface
+# openroad  # Install separately
+# klayout  # For visualization
+
+# Documentation
+sphinx>=6.2.0
+sphinx-rtd-theme>=1.2.0
+sphinx-autodoc-typehints>=1.23.0

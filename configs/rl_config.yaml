@@ -1,0 +1,21 @@
+# Configuration for RL fine-tuning phase
+
+extends: placement_config.yaml
+
+training:
+  phase: "rl"
+  
+rl:
+  action_type: "continuous"  # continuous or discrete
+  exploration_noise: 0.1
+  target_update_freq: 1000
+  
+  # Advanced RL options
+  use_her: true  # Hindsight Experience Replay
+  use_curiosity: true  # Intrinsic motivation
+  use_rnd: false  # Random Network Distillation
+  
+environment:
+  reward_shaping: true
+  intermediate_rewards: true
+  max_overlap_penalty: 100.0

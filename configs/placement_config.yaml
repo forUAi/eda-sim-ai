@@ -1,0 +1,127 @@
+# Main configuration file for EDA-SIM-AI placement engine
+
+# Model architecture configuration
+model:
+  architecture: "HeteroGNN"
+  num_cell_types: 100
+  cell_feat_dim: 12  # area, pins, timing, power features
+  io_feat_dim: 4     # direction, connectivity, position
+  hidden_dim: 256
+  num_layers: 8
+  num_heads: 4
+  dropout: 0.1
+  grid_size: 1000
+  estimate_ppa: true
+
+# Feature extraction configuration  
+features:
+  use_cell_type: true
+  use_cell_area: true
+  use_pin_count: true
+  use_timing_criticality: true
+  use_power_features: true
+  use_fanout: true
+  use_net_criticality: true
+  use_estimated_capacitance: true
+  use_spectral_features: true
+  spectral_dim: 16
+  normalize_features: true
+  max_cell_types: 100
+
+# Data configuration
+data:
+  train_dir: "data/openroad_outputs/train"
+  val_dir: "data/openroad_outputs/val"
+  test_dir: "data/openroad_outputs/test"
+  benchmark_dir: "data/benchmarks"
+  augment: true
+  cache_features: true
+
+# Imitation learning configuration
+imitation:
+  batch_size: 32
+  learning_rate: 1e-4
+  epochs: 100
+  gradient_clip: 1.0
+  warmup_steps: 1000
+  scheduler: "cosine"
+  loss_weights:
+    placement: 1.0
+    hpwl: 0.1
+    timing: 0.2
+    power: 0.1
+    congestion: 0.1
+
+# PPA surrogate model configuration
+surrogate:
+  architecture: "DeepSets"
+  hidden_dim: 512
+  num_layers: 6
+  batch_size: 64
+  learning_rate: 3e-4
+  epochs: 50
+  metrics_to_predict:
+    - hpwl
+    - wns
+    - tns
+    - power
+    - congestion
+
+# Reinforcement learning configuration
+rl:
+  algorithm: "PPO"  # PPO or SAC
+  grid_size: 1000
+  max_steps_per_episode: 1000
+  
+  # PPO hyperparameters
+  learning_rate: 3e-4
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.01
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  
+  # Reward configuration
+  reward_weights:
+    wirelength: 1.0
+    timing: 2.0
+    power: 0.5
+    congestion: 1.5
+    overlap: 10.0
+    
+  # Training configuration
+  total_timesteps: 1000000
+  eval_freq: 10000
+  save_freq: 50000
+  
+  # Curriculum learning
+  use_curriculum: true
+  curriculum_stages: [5000, 10000, 50000, 100000, 200000]
+
+# Optimization settings
+optimization:
+  mixed_precision: true
+  gradient_checkpointing: true
+  compile_model: true  # PyTorch 2.0 torch.compile
+  num_workers: 8
+  pin_memory: true
+
+# Logging and checkpointing
+logging:
+  use_wandb: true
+  wandb_project: "eda-sim-ai"
+  log_interval: 100
+  save_best_only: true
+  patience: 10
+  checkpoint_dir: "checkpoints"
+
+# Hardware requirements
+hardware:
+  gpus: 1  # Number of GPUs
+  gpu_memory: 16  # Minimum GPU memory in GB
+  cpu_cores: 8
+  ram: 32  # Minimum RAM in GB
